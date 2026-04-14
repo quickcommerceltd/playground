@@ -44,7 +44,8 @@ export const ProductList = ({ products }: ProductListProps) => {
 						<CardHeader>
 							<CardTitle>{product.name}</CardTitle>
 							<CardDescription>
-								{product.brand} · {product.category}
+								{product.brand ? `${product.brand} · ` : ""}
+								{product.category}
 							</CardDescription>
 						</CardHeader>
 						<CardContent>

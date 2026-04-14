@@ -45,11 +45,12 @@ describe("UsersService", () => {
 	};
 
 	beforeEach(async () => {
+		process.env.DATABASE_PATH = ":memory:";
+
 		const module = await Test.createTestingModule({
 			providers: [UsersService, DatabaseService],
 		}).compile();
 
-		process.env.DATABASE_PATH = ":memory:";
 		service = module.get(UsersService);
 
 		const db = module.get(DatabaseService);

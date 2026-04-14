@@ -42,11 +42,12 @@ describe("ProductsService", () => {
 	};
 
 	beforeEach(async () => {
+		process.env.DATABASE_PATH = ":memory:";
+
 		const module = await Test.createTestingModule({
 			providers: [ProductsService, DatabaseService],
 		}).compile();
 
-		process.env.DATABASE_PATH = ":memory:";
 		service = module.get(ProductsService);
 
 		// Trigger table creation

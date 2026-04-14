@@ -36,6 +36,14 @@ export const ProductsSearchControls = ({
 		setBrand(searchParams.get("brand") ?? "");
 		setMinPrice(searchParams.get("minPrice") ?? "");
 		setMaxPrice(searchParams.get("maxPrice") ?? "");
+		setShowFilters(
+			Boolean(
+				searchParams.get("category") ||
+					searchParams.get("brand") ||
+					searchParams.get("minPrice") ||
+					searchParams.get("maxPrice"),
+			),
+		);
 	}, [searchParams]);
 
 	const activeFilterCount = [category, brand, minPrice, maxPrice].filter(
@@ -94,8 +102,12 @@ export const ProductsSearchControls = ({
 		<form onSubmit={onSubmit} className="mb-8 space-y-3">
 			<div className="flex flex-col gap-2 sm:flex-row sm:items-center">
 				<div className="relative flex-1">
+					<label htmlFor="products-search" className="sr-only">
+						Search products
+					</label>
 					<Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
 					<input
+						id="products-search"
 						type="search"
 						value={search}
 						onChange={(event) => setSearch(event.target.value)}
@@ -104,7 +116,11 @@ export const ProductsSearchControls = ({
 					/>
 				</div>
 				<div className="flex flex-wrap items-center gap-2">
+					<label htmlFor="products-sort" className="sr-only">
+						Sort products
+					</label>
 					<select
+						id="products-sort"
 						value={sort}
 						onChange={(event) => setSort(event.target.value)}
 						className="h-9 min-w-0 flex-1 rounded-md border border-input bg-background px-3 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:flex-none"

@@ -13,6 +13,17 @@ describe("cors.config", () => {
 		]);
 	});
 
+	it("returns the local demo defaults when env is whitespace-only", () => {
+		expect(resolveCorsOrigins("   ")).toEqual([
+			"http://localhost:4991",
+			"http://127.0.0.1:4991",
+			"http://localhost:4994",
+			"http://127.0.0.1:4994",
+			"http://localhost:8081",
+			"http://127.0.0.1:8081",
+		]);
+	});
+
 	it("parses a comma-separated env override", () => {
 		expect(
 			resolveCorsOrigins(

@@ -58,7 +58,7 @@ export default async function ProductDetailPage({
 	const { id } = await params;
 	const parsedId = Number(id);
 
-	if (!Number.isFinite(parsedId)) {
+	if (!Number.isInteger(parsedId) || parsedId < 1) {
 		notFound();
 	}
 
@@ -80,7 +80,8 @@ export default async function ProductDetailPage({
 				<CardHeader>
 					<CardTitle className="text-3xl">{product.name}</CardTitle>
 					<CardDescription>
-						{product.brand} · {product.category}
+						{product.brand ? `${product.brand} · ` : ""}
+						{product.category}
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="space-y-6">
