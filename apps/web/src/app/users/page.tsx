@@ -98,31 +98,16 @@ const getUsers = async (
 	return response.json();
 };
 
-const extractRoles = (users: UserListItem[]) =>
-	Array.from(
-		new Set(users.map((user) => user.role?.trim()).filter(Boolean)),
-	).sort((leftRole, rightRole) => leftRole.localeCompare(rightRole));
-
 const getRolesList = async (): Promise<string[]> => {
-	const queryParams = new URLSearchParams();
-	queryParams.set("pagination", "page");
-	queryParams.set("page", "1");
-	queryParams.set("pageSize", "100");
-	queryParams.set("sortBy", "role");
-	queryParams.set("sortDir", "asc");
-	const response = await fetch(
-		`${API_URL}/v2/users?${queryParams.toString()}`,
-		{
-			cache: "no-store",
-		},
-	);
+	const response = await fetch(`${API_URL}/v2/users/roles`, {
+		cache: "no-store",
+	});
 
 	if (!response.ok) {
 		throw new Error("Failed to load roles list.");
 	}
 
-	const payload = (await response.json()) as PaginatedUsersResponse;
-	return extractRoles(payload.items);
+	return response.json();
 };
 
 const buildPageHref = (query: UsersListQuery, nextPage: number) => {
@@ -182,7 +167,7 @@ const UsersPage = async ({
 	try {
 		roles = await getRolesList();
 	} catch {
-		roles = extractRoles(users);
+		roles = [];
 	}
 
 	return (

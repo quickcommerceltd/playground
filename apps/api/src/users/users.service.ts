@@ -270,6 +270,23 @@ export class UsersService {
 		return this.applySort(query, filters).execute();
 	}
 
+	async findRoles(): Promise<string[]> {
+		const rows = await this.getKyselyDb()
+			.selectFrom("users")
+			.select("role")
+			.where("role", "is not", null)
+			.orderBy("role", "asc")
+			.execute();
+
+		return Array.from(
+			new Set(
+				rows
+					.map((row) => row.role?.trim())
+					.filter((role): role is string => Boolean(role)),
+			),
+		).sort((leftRole, rightRole) => leftRole.localeCompare(rightRole));
+	}
+
 	findById(id: number) {
 		return this.getKyselyDb()
 			.selectFrom("users")

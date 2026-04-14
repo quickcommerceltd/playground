@@ -33,6 +33,11 @@ export class UsersV2Controller {
 		return this.usersService.findAll(mapFindUsersQueryToFilters(query));
 	}
 
+	@Get("roles")
+	findRoles() {
+		return this.usersService.findRoles();
+	}
+
 	@Get(":id")
 	async findById(@Param("id", ParseIntPipe) id: number) {
 		const user = await this.usersService.findById(id);
