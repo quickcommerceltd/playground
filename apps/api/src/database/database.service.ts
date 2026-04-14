@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from "@nestjs/common";
+import { Injectable, type OnModuleInit } from "@nestjs/common";
 import Database from "better-sqlite3";
 
 @Injectable()
@@ -39,7 +39,7 @@ export class DatabaseService implements OnModuleInit {
 				weight REAL,
 				rating REAL DEFAULT 0,
 				review_count INTEGER DEFAULT 0,
-				in_stock INTEGER DEFAULT 1,
+				in_stock INTEGER DEFAULT 0,
 				stock_quantity INTEGER DEFAULT 0,
 				discount_percent INTEGER DEFAULT 0,
 				tags TEXT,
@@ -62,5 +62,9 @@ export class DatabaseService implements OnModuleInit {
 	run(sql: string, params: unknown[] = []) {
 		const stmt = this.db.prepare(sql);
 		return stmt.run(...params);
+	}
+
+	getConnection() {
+		return this.db;
 	}
 }

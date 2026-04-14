@@ -26,18 +26,27 @@ importers:
       '@nestjs/platform-express':
         specifier: 11.1.18
         version: 11.1.18(@nestjs/common@11.1.18(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.18)
+      '@zapp/entities':
+        specifier: workspace:*
+        version: link:../../packages/entities
       '@zapp/utils':
         specifier: workspace:*
         version: link:../../packages/utils
       better-sqlite3:
         specifier: 12.9.0
         version: 12.9.0
+      kysely:
+        specifier: ^0.28.16
+        version: 0.28.16
       reflect-metadata:
         specifier: 0.2.2
         version: 0.2.2
       rxjs:
         specifier: 7.8.2
         version: 7.8.2
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@nestjs/cli':
         specifier: 11.0.19
@@ -140,6 +149,9 @@ importers:
       '@radix-ui/react-slot':
         specifier: 1.2.4
         version: 1.2.4(@types/react@19.2.14)(react@19.2.5)
+      '@tanstack/react-query':
+        specifier: ^5.99.0
+        version: 5.99.0(react@19.2.5)
       '@zapp/utils':
         specifier: workspace:*
         version: link:../../packages/utils
@@ -210,6 +222,22 @@ importers:
       vitest:
         specifier: 4.1.4
         version: 4.1.4(@types/node@25.6.0)(jsdom@29.0.2)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.25.12)(jiti@2.6.1)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
+
+  packages/entities:
+    dependencies:
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
+    devDependencies:
+      '@zapp/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: 6.0.2
+        version: 6.0.2
+      vitest:
+        specifier: 4.1.4
+        version: 4.1.4(@types/node@25.6.0)(jsdom@29.0.2)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.7)(jiti@2.6.1)(terser@5.46.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/typescript-config: {}
 
@@ -3528,6 +3556,14 @@ packages:
     peerDependencies:
       react: '>=19'
 
+  '@tanstack/query-core@5.99.0':
+    resolution: {integrity: sha512-3Jv3WQG0BCcH7G+7lf/bP8QyBfJOXeY+T08Rin3GZ1bshvwlbPt7NrDHMEzGdKIOmOzvIQmxjk28YEQX60k7pQ==}
+
+  '@tanstack/react-query@5.99.0':
+    resolution: {integrity: sha512-OY2bCqPemT1LlqJ8Y2CUau4KELnIhhG9Ol3ZndPbdnB095pRbPo1cHuXTndg8iIwtoHTgwZjyaDnQ0xD0mYwAw==}
+    peerDependencies:
+      react: ^18 || ^19
+
   '@testing-library/dom@10.4.0':
     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
     engines: {node: '>=18'}
@@ -5469,6 +5505,10 @@ packages:
   kleur@3.0.3:
     resolution: {integrity: sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==}
     engines: {node: '>=6'}
+
+  kysely@0.28.16:
+    resolution: {integrity: sha512-3i5pmOiZvMDj00qhrIVbH0AnioVTx22DMP7Vn5At4yJO46iy+FM8Y/g61ltenLVSo3fiO8h8Q3QOFgf/gQ72ww==}
+    engines: {node: '>=20.0.0'}
 
   lan-network@0.2.1:
     resolution: {integrity: sha512-ONPnazC96VKDntab9j9JKwIWhZ4ZUceB4A9Epu4Ssg0hYFmtHZSeQ+n15nIwTFmcBUKtExOer8WTJ4GF9MO64A==}
@@ -7573,6 +7613,9 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
 snapshots:
 
@@ -12524,6 +12567,13 @@ snapshots:
     dependencies:
       react: 19.2.5
 
+  '@tanstack/query-core@5.99.0': {}
+
+  '@tanstack/react-query@5.99.0(react@19.2.5)':
+    dependencies:
+      '@tanstack/query-core': 5.99.0
+      react: 19.2.5
+
   '@testing-library/dom@10.4.0':
     dependencies:
       '@babel/code-frame': 7.29.0
@@ -14721,6 +14771,8 @@ snapshots:
       json-buffer: 3.0.1
 
   kleur@3.0.3: {}
+
+  kysely@0.28.16: {}
 
   lan-network@0.2.1: {}
 
@@ -17252,3 +17304,5 @@ snapshots:
   yoctocolors-cjs@2.1.3: {}
 
   zod@3.25.76: {}
+
+  zod@4.3.6: {}

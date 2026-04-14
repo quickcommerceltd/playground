@@ -1,32 +1,58 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Get,
+	NotFoundException,
+	Param,
+	ParseIntPipe,
+	Post,
+	Query,
+} from "@nestjs/common";
+import { ZodValidationPipe } from "../common/pipes/zod-validation.pipe";
+import {
+	type CreateProductDto,
+	createProductDtoSchema,
+} from "./dto/create-product.dto";
+import {
+	type FindProductsQueryDto,
+	findProductsQueryDtoSchema,
+	mapFindProductsQueryToFilters,
+} from "./dto/find-products-query.dto";
 import { ProductsService } from "./products.service";
 
-@Controller("products")
-export class ProductsController {
+@Controller({ path: "products", version: "2" })
+export class ProductsV2Controller {
 	constructor(private readonly productsService: ProductsService) {}
 
 	@Get()
-	findAll() {
-		return this.productsService.findAll();
+	findAll(
+		@Query(new ZodValidationPipe(findProductsQueryDtoSchema))
+		query: FindProductsQueryDto = {},
+	) {
+		return this.productsService.findAll(mapFindProductsQueryToFilters(query));
+	}
+
+	@Get("brands")
+	findBrands() {
+		return this.productsService.findBrands();
 	}
 
 	@Get(":id")
-	findById(@Param("id") id: string) {
-		return this.productsService.findById(Number(id));
+	async findById(@Param("id", ParseIntPipe) id: number) {
+		const product = await this.productsService.findById(id);
+		if (!product) {
+			throw new NotFoundException(`Product ${id} was not found.`);
+		}
+
+		return product;
 	}
 
 	@Post()
 	create(
-		@Body()
-		body: {
-			name: string;
-			description?: string;
-			price: number;
-			sku: string;
-			category: string;
-			brand?: string;
-		},
+		@Body(new ZodValidationPipe(createProductDtoSchema)) body: CreateProductDto,
 	) {
 		return this.productsService.create(body);
 	}
 }
+
+export { ProductsV2Controller as ProductsController };

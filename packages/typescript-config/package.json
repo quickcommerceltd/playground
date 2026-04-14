@@ -2,11 +2,20 @@
 	"name": "@zapp/typescript-config",
 	"version": "0.0.0",
 	"private": true,
+	"files": ["*.json"],
 	"exports": {
 		"./base": "./base.json",
+		"./base.json": "./base.json",
 		"./nestjs": "./nestjs.json",
+		"./nestjs.json": "./nestjs.json",
 		"./nextjs": "./nextjs.json",
+		"./nextjs.json": "./nextjs.json",
 		"./expo": "./expo.json",
-		"./library": "./library.json"
+		"./expo.json": "./expo.json",
+		"./library": "./library.json",
+		"./library.json": "./library.json",
+		"./node": "./node.json",
+		"./node.json": "./node.json",
+		"./package.json": "./package.json"
 	}
 }

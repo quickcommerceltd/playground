@@ -1,10 +1,10 @@
-import { TamaguiProvider } from "tamagui";
 import { Stack } from "expo-router";
+import { TamaguiProvider } from "tamagui";
 import tamaguiConfig from "../tamagui.config";
 
 export default function RootLayout() {
 	return (
-		<TamaguiProvider config={tamaguiConfig}>
+		<TamaguiProvider config={tamaguiConfig} defaultTheme="light">
 			<Stack>
 				<Stack.Screen name="index" options={{ title: "Zapp" }} />
 				<Stack.Screen name="users" options={{ title: "Users" }} />

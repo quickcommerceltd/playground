@@ -1,7 +1,4 @@
-"use client";
-
 import { formatDate } from "@zapp/utils";
-import { useEffect, useState } from "react";
 import {
 	Table,
 	TableBody,
@@ -11,7 +8,7 @@ import {
 	TableRow,
 } from "@/components/ui/table";
 
-interface User {
+export type UserListItem = {
 	id: number;
 	name: string;
 	email: string;
@@ -19,19 +16,16 @@ interface User {
 	role: string;
 	is_active: number;
 	created_at: string;
-}
+};
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4992";
+type UserListProps = {
+	users: UserListItem[];
+};
 
-export function UserList() {
-	const [users, setUsers] = useState<User[]>([]);
-
-	useEffect(() => {
-		fetch(`${API_URL}/users`)
-			.then((res) => res.json())
-			.then(setUsers)
-			.catch(console.error);
-	}, []);
+export const UserList = ({ users }: UserListProps) => {
+	if (users.length === 0) {
+		return <p>No users found.</p>;
+	}
 
 	return (
 		<Table>
@@ -61,4 +55,4 @@ export function UserList() {
 			</TableBody>
 		</Table>
 	);
-}
+};

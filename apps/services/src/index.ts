@@ -12,9 +12,16 @@ app.get("/", (c) => {
 	});
 });
 
-const port = Number(process.env.PORT) || 4993;
+export const startServer = (port = Number(process.env.PORT) || 4993) => {
+	console.log(`Services running on http://localhost:${port}`);
+	return serve({ fetch: app.fetch, port });
+};
 
-console.log(`Services running on http://localhost:${port}`);
-serve({ fetch: app.fetch, port });
+const shouldStartServer =
+	process.env.NODE_ENV !== "test" && process.env.VITEST !== "true";
+
+if (shouldStartServer) {
+	startServer();
+}
 
 export default app;

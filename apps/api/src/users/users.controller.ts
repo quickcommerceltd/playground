@@ -1,22 +1,48 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Get,
+	NotFoundException,
+	Param,
+	ParseIntPipe,
+	Post,
+	Query,
+} from "@nestjs/common";
+import { ZodValidationPipe } from "../common/pipes/zod-validation.pipe";
+import { type CreateUserDto, createUserDtoSchema } from "./dto/create-user.dto";
+import {
+	type FindUsersQueryDto,
+	findUsersQueryDtoSchema,
+	mapFindUsersQueryToFilters,
+} from "./dto/find-users-query.dto";
 import { UsersService } from "./users.service";
 
-@Controller("users")
-export class UsersController {
+@Controller({ path: "users", version: "2" })
+export class UsersV2Controller {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Get()
-	findAll() {
-		return this.usersService.findAll();
+	findAll(
+		@Query(new ZodValidationPipe(findUsersQueryDtoSchema))
+		query: FindUsersQueryDto = {},
+	) {
+		return this.usersService.findAll(mapFindUsersQueryToFilters(query));
 	}
 
 	@Get(":id")
-	findById(@Param("id") id: string) {
-		return this.usersService.findById(Number(id));
+	async findById(@Param("id", ParseIntPipe) id: number) {
+		const user = await this.usersService.findById(id);
+		if (!user) {
+			throw new NotFoundException(`User ${id} was not found.`);
+		}
+
+		return user;
 	}
 
 	@Post()
-	create(@Body() body: { name: string; email: string; phone?: string }) {
+	create(
+		@Body(new ZodValidationPipe(createUserDtoSchema)) body: CreateUserDto,
+	) {
 		return this.usersService.create(body);
 	}
 }

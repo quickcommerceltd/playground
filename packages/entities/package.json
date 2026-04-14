@@ -1,0 +1,24 @@
+{
+	"name": "@zapp/entities",
+	"version": "0.0.0",
+	"private": true,
+	"main": "./src/index.ts",
+	"types": "./src/index.ts",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"scripts": {
+		"lint": "biome check src/",
+		"format": "biome format --write src/",
+		"check": "tsc --noEmit",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"zod": "^4.3.6"
+	},
+	"devDependencies": {
+		"@zapp/typescript-config": "workspace:*",
+		"typescript": "6.0.2",
+		"vitest": "4.1.4"
+	}
+}
