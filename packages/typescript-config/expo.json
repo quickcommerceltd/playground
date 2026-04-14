@@ -3,6 +3,9 @@
 	"compilerOptions": {
 		"jsx": "react-jsx",
 		"lib": ["ES2022"],
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"rewriteRelativeImportExtensions": true,
 		"module": "ESNext",
 		"noEmit": true
 	}

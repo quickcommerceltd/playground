@@ -16,6 +16,7 @@
 	},
 	"dependencies": {
 		"@radix-ui/react-slot": "1.2.4",
+		"@tanstack/react-query": "^5.99.0",
 		"@zapp/utils": "workspace:*",
 		"class-variance-authority": "0.7.1",
 		"clsx": "2.1.1",
@@ -30,6 +31,7 @@
 		"@storybook/addon-essentials": "8.6.14",
 		"@storybook/nextjs": "8.6.14",
 		"@storybook/react": "8.6.14",
+		"@tailwindcss/postcss": "4.2.2",
 		"@testing-library/react": "16.3.2",
 		"@types/react": "19.2.14",
 		"@types/react-dom": "19.2.3",
@@ -38,7 +40,6 @@
 		"jsdom": "29.0.2",
 		"storybook": "8.6.14",
 		"tailwindcss": "4.2.2",
-		"@tailwindcss/postcss": "4.2.2",
 		"typescript": "6.0.2",
 		"vitest": "4.1.4"
 	}

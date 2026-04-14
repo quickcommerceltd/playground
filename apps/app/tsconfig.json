@@ -1,6 +1,7 @@
 {
-	"extends": "@zapp/typescript-config/expo",
+	"extends": "@zapp/typescript-config/expo.json",
 	"compilerOptions": {
+		"lib": ["ES2022", "DOM"],
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"]

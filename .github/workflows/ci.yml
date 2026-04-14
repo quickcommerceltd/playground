@@ -1,13 +1,21 @@
 name: CI
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ci:
+    name: Lint, Typecheck, Test, Build
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +32,8 @@ jobs:
 
       - run: pnpm lint
 
-      - run: pnpm build
+      - run: pnpm check
 
       - run: pnpm test
+
+      - run: pnpm build

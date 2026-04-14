@@ -1,14 +1,15 @@
 {
 	"extends": "./base.json",
 	"compilerOptions": {
+		"lib": ["ES2022"],
 		"module": "CommonJS",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"rewriteRelativeImportExtensions": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"outDir": "./dist",
-		"rootDir": "./src",
+		"noEmit": true,
 		"declaration": false,
-		"declarationMap": false,
-		"ignoreDeprecations": "6.0"
+		"declarationMap": false
 	}
 }

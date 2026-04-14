@@ -1,5 +1,5 @@
 {
-	"extends": "@zapp/typescript-config/nestjs",
+	"extends": "@zapp/typescript-config/nestjs.json",
 	"compilerOptions": {
 		"outDir": "./dist",
 		"rootDir": "./src"

@@ -141,6 +141,10 @@ vite.config.ts.timestamp-*
 # SQLite
 *.db
 *.sqlite
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
 
 # Turbo
 .turbo

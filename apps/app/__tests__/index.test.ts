@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { formatCurrency } from "@zapp/utils";
+import { describe, expect, it } from "vitest";
 
 describe("App utils integration", () => {
 	it("can use shared utils package", () => {

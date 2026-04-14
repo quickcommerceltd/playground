@@ -1,7 +1,6 @@
 import { formatCurrency } from "@zapp/utils";
 import { useEffect, useState } from "react";
-import { FlatList } from "react-native";
-import { Card, H4, Paragraph, Separator, Text, XStack, YStack } from "tamagui";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 interface Product {
 	id: number;
@@ -17,46 +16,121 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:4992";
 
 export default function ProductsScreen() {
 	const [products, setProducts] = useState<Product[]>([]);
+	const [error, setError] = useState<string | null>(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		fetch(`${API_URL}/products`)
-			.then((res) => res.json())
+		setLoading(true);
+		setError(null);
+		fetch(`${API_URL}/v2/products`)
+			.then((res) => {
+				if (!res.ok) throw new Error(`HTTP ${res.status}`);
+				return res.json();
+			})
 			.then(setProducts)
-			.catch(console.error);
+			.catch(() => setError("Failed to load products. Please try again later."))
+			.finally(() => setLoading(false));
 	}, []);
 
+	if (loading) {
+		return (
+			<View style={styles.centeredState}>
+				<Text>Loading products...</Text>
+			</View>
+		);
+	}
+
+	if (error) {
+		return (
+			<View style={styles.centeredState}>
+				<Text style={styles.errorText}>{error}</Text>
+			</View>
+		);
+	}
+
 	return (
-		<YStack flex={1} padding="$2">
+		<View style={styles.container}>
 			<FlatList
 				data={products}
 				keyExtractor={(item) => String(item.id)}
-				ItemSeparatorComponent={() => <Separator marginVertical="$2" />}
+				ItemSeparatorComponent={() => <View style={styles.separator} />}
 				renderItem={({ item }) => (
-					<Card padded>
-						<H4>{item.name}</H4>
-						<XStack gap="$2" alignItems="center">
-							<Text fontSize="$6" fontWeight="bold">
-								{formatCurrency(item.price)}
-							</Text>
-							<Text fontSize="$2" color="$gray10">
-								{item.brand} · {item.category}
-							</Text>
-						</XStack>
-						{item.description && (
-							<Paragraph size="$2" color="$gray11" marginTop="$1">
-								{item.description}
-							</Paragraph>
-						)}
+					<View style={styles.card}>
+						<Text style={styles.name}>{item.name}</Text>
+						<Text style={styles.price}>{formatCurrency(item.price)}</Text>
+						<Text style={styles.meta}>
+							{item.brand ?? "Unknown brand"} · {item.category}
+						</Text>
+						{item.description ? (
+							<Text style={styles.description}>{item.description}</Text>
+						) : null}
 						<Text
-							fontSize="$2"
-							marginTop="$2"
-							color={item.in_stock ? "$green10" : "$red10"}
+							style={[
+								styles.stock,
+								item.in_stock ? styles.inStock : styles.outOfStock,
+							]}
 						>
 							{item.in_stock ? "In Stock" : "Out of Stock"}
 						</Text>
-					</Card>
+					</View>
 				)}
 			/>
-		</YStack>
+		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		padding: 8,
+	},
+	centeredState: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		padding: 16,
+	},
+	card: {
+		borderRadius: 12,
+		borderWidth: 1,
+		borderColor: "#d1d5db",
+		backgroundColor: "#ffffff",
+		padding: 16,
+	},
+	name: {
+		fontSize: 20,
+		fontWeight: "600",
+	},
+	price: {
+		marginTop: 8,
+		fontSize: 24,
+		fontWeight: "700",
+	},
+	meta: {
+		marginTop: 6,
+		fontSize: 12,
+		color: "#6b7280",
+	},
+	description: {
+		marginTop: 8,
+		fontSize: 14,
+		color: "#374151",
+	},
+	stock: {
+		marginTop: 10,
+		fontSize: 12,
+		fontWeight: "600",
+	},
+	inStock: {
+		color: "#166534",
+	},
+	outOfStock: {
+		color: "#b91c1c",
+	},
+	errorText: {
+		color: "#b91c1c",
+	},
+	separator: {
+		height: 8,
+	},
+});

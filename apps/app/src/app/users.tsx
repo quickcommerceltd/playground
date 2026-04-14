@@ -1,7 +1,6 @@
 import { formatDate } from "@zapp/utils";
 import { useEffect, useState } from "react";
-import { FlatList } from "react-native";
-import { ListItem, Separator, Text, YStack } from "tamagui";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
 interface User {
 	id: number;
@@ -24,19 +23,49 @@ export default function UsersScreen() {
 	}, []);
 
 	return (
-		<YStack flex={1}>
+		<View style={styles.container}>
 			<FlatList
 				data={users}
 				keyExtractor={(item) => String(item.id)}
-				ItemSeparatorComponent={() => <Separator />}
+				ItemSeparatorComponent={() => <View style={styles.separator} />}
 				renderItem={({ item }) => (
-					<ListItem title={item.name} subTitle={item.email}>
-						<Text fontSize="$2" color="$gray10">
+					<View style={styles.row}>
+						<Text style={styles.name}>{item.name}</Text>
+						<Text style={styles.email}>{item.email}</Text>
+						<Text style={styles.meta}>
 							{item.role} · {formatDate(item.created_at)}
 						</Text>
-					</ListItem>
+					</View>
 				)}
 			/>
-		</YStack>
+		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+	row: {
+		paddingHorizontal: 16,
+		paddingVertical: 12,
+	},
+	name: {
+		fontSize: 18,
+		fontWeight: "600",
+	},
+	email: {
+		marginTop: 4,
+		fontSize: 14,
+		color: "#374151",
+	},
+	meta: {
+		marginTop: 6,
+		fontSize: 12,
+		color: "#6b7280",
+	},
+	separator: {
+		height: StyleSheet.hairlineWidth,
+		backgroundColor: "#d1d5db",
+	},
+});
