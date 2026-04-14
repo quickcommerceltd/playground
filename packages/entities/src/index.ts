@@ -3,10 +3,10 @@ export {
 	createProductInputSchema,
 	type Product,
 	productSchema,
-} from "./product";
+} from "./product.ts";
 export {
 	type CreateUserInput,
 	createUserInputSchema,
 	type User,
 	userSchema,
-} from "./user";
+} from "./user.ts";

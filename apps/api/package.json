@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"dev": "nest start --watch",
+		"dev": "tsx watch src/main.ts",
 		"build": "nest build",
 		"start": "node dist/main",
 		"seed": "tsx src/database/seed.ts",

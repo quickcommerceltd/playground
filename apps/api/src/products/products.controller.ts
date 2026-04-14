@@ -2,6 +2,7 @@ import {
 	Body,
 	Controller,
 	Get,
+	Inject,
 	NotFoundException,
 	Param,
 	ParseIntPipe,
@@ -22,7 +23,10 @@ import { ProductsService } from "./products.service";
 
 @Controller({ path: "products", version: "2" })
 export class ProductsV2Controller {
-	constructor(private readonly productsService: ProductsService) {}
+	constructor(
+		@Inject(ProductsService)
+		private readonly productsService: ProductsService,
+	) {}
 
 	@Get()
 	findAll(

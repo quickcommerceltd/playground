@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Inject, Injectable } from "@nestjs/common";
 import { type CreateProductInput } from "@zapp/entities";
 import {
 	ColumnType,
@@ -99,7 +99,10 @@ type FindAllResult = ProductRow[] | PageProductsResult | CursorProductsResult;
 export class ProductsService {
 	private kyselyDb?: Kysely<DatabaseSchema>;
 
-	constructor(private readonly db: DatabaseService) {}
+	constructor(
+		@Inject(DatabaseService)
+		private readonly db: DatabaseService,
+	) {}
 
 	private getKyselyDb() {
 		if (!this.kyselyDb) {

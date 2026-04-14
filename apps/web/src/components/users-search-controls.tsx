@@ -83,11 +83,11 @@ export const UsersSearchControls = ({ roles }: UsersSearchControlsProps) => {
 						className="h-9 w-full rounded-md border border-input bg-background pl-9 pr-3 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
 					/>
 				</div>
-				<div className="flex items-center gap-2">
+				<div className="flex flex-wrap items-center gap-2">
 					<select
 						value={sort}
 						onChange={(event) => setSort(event.target.value)}
-						className="h-9 rounded-md border border-input bg-background px-3 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+						className="h-9 min-w-0 flex-1 rounded-md border border-input bg-background px-3 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring sm:flex-none"
 					>
 						<option value="">Sort by</option>
 						<option value="name_asc">Name: A to Z</option>

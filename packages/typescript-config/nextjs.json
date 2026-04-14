@@ -4,6 +4,8 @@
 		"jsx": "preserve",
 		"lib": ["DOM", "DOM.Iterable", "ES2022"],
 		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"rewriteRelativeImportExtensions": true,
 		"module": "ESNext",
 		"noEmit": true,
 		"plugins": [{ "name": "next" }]

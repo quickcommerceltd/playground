@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Inject, Injectable } from "@nestjs/common";
 import { type CreateUserInput } from "@zapp/entities";
 import {
 	ColumnType,
@@ -87,7 +87,10 @@ type FindAllResult = UserRow[] | PageUsersResult | CursorUsersResult;
 export class UsersService {
 	private kyselyDb?: Kysely<DatabaseSchema>;
 
-	constructor(private readonly db: DatabaseService) {}
+	constructor(
+		@Inject(DatabaseService)
+		private readonly db: DatabaseService,
+	) {}
 
 	private getKyselyDb() {
 		if (!this.kyselyDb) {
