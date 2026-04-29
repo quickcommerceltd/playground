@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Get,
+	NotFoundException,
+	Param,
+	Post,
+} from "@nestjs/common";
 import { ProductsService } from "./products.service";
 
 @Controller("products")
@@ -12,7 +19,11 @@ export class ProductsController {
 
 	@Get(":id")
 	findById(@Param("id") id: string) {
-		return this.productsService.findById(Number(id));
+		const product = this.productsService.findById(Number(id));
+		if (!product) {
+			throw new NotFoundException(`Product ${id} not found`);
+		}
+		return product;
 	}
 
 	@Post()

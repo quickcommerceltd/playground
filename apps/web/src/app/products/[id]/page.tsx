@@ -19,7 +19,11 @@ export default async function ProductDetailPage({
 		throw new Error(`Failed to fetch product ${id}: ${res.status}`);
 	}
 
-	const product = await res.json();
+	const text = await res.text();
+	const product = text ? JSON.parse(text) : null;
+	if (!product) {
+		notFound();
+	}
 
 	return (
 		<div>
