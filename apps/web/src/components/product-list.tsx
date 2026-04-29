@@ -41,8 +41,12 @@ export function ProductList() {
 	return (
 		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 			{products.map((product) => (
-				<Link key={product.id} href={`/products/${product.id}`}>
-					<Card className="transition-shadow hover:shadow-md">
+				<Link
+					key={product.id}
+					href={`/products/${product.id}`}
+					className="block h-full"
+				>
+					<Card className="h-full transition-shadow hover:shadow-md">
 						<CardHeader>
 							<CardTitle>{product.name}</CardTitle>
 							<CardDescription>
