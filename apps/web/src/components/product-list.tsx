@@ -1,6 +1,7 @@
 "use client";
 
 import { formatCurrency } from "@zapp/utils";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
 	Card,
@@ -40,34 +41,36 @@ export function ProductList() {
 	return (
 		<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 			{products.map((product) => (
-				<Card key={product.id}>
-					<CardHeader>
-						<CardTitle>{product.name}</CardTitle>
-						<CardDescription>
-							{product.brand} · {product.category}
-						</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<div className="flex items-center justify-between">
-							<span className="text-2xl font-bold">
-								{formatCurrency(product.price)}
-							</span>
-							{product.discount_percent > 0 && (
-								<span className="text-sm text-destructive">
-									-{product.discount_percent}%
+				<Link key={product.id} href={`/products/${product.id}`}>
+					<Card className="transition-shadow hover:shadow-md">
+						<CardHeader>
+							<CardTitle>{product.name}</CardTitle>
+							<CardDescription>
+								{product.brand} · {product.category}
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<div className="flex items-center justify-between">
+								<span className="text-2xl font-bold">
+									{formatCurrency(product.price)}
 								</span>
-							)}
-						</div>
-						<p className="mt-2 text-sm text-muted-foreground">
-							{product.description}
-						</p>
-						<div className="mt-3 flex items-center gap-2 text-sm">
-							<span>{product.in_stock ? "In Stock" : "Out of Stock"}</span>
-							<span>·</span>
-							<span>SKU: {product.sku}</span>
-						</div>
-					</CardContent>
-				</Card>
+								{product.discount_percent > 0 && (
+									<span className="text-sm text-destructive">
+										-{product.discount_percent}%
+									</span>
+								)}
+							</div>
+							<p className="mt-2 text-sm text-muted-foreground">
+								{product.description}
+							</p>
+							<div className="mt-3 flex items-center gap-2 text-sm">
+								<span>{product.in_stock ? "In Stock" : "Out of Stock"}</span>
+								<span>·</span>
+								<span>SKU: {product.sku}</span>
+							</div>
+						</CardContent>
+					</Card>
+				</Link>
 			))}
 		</div>
 	);
